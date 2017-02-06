@@ -26,30 +26,27 @@ Application Server на выбор, предпочтение отдается wi
 
 ## Описание протокола
 ### Структура исходящего сообщения
-'''json
+
     { 
       “type”: “TYPE_OF_MESSAGE” , // строка, тип сообщения
       “sequence_id”: “09caaa73-b2b1-187e-2b24-683550a49b23”, // строка, идентификатор связанности сообщений
       “data” : {} // объект, содержит данные запроса
     }
-'''
+
 
 ### Структура входящего сообщения
-'''json
     { 
       “type”: “TYPE_OF_MESSAGE” , // строка, тип сообщения
       “sequence_id”: “09caaa73-b2b1-187e-2b24-683550a49b23”, // строка, идентификатор связанности сообщений
       “data” : {} // объект, содержит данные ответа
     }
-'''
 
 В случае возврата сообщения об ошибке, объект data должен содержать следующие поля:
-'''json
+
     "error_description":"Customer not found”, // поле с описанием ошибки
     "error_code":"customer.notFound” // поле с кодом ошибки
-'''
+
 ### Запрос для успешной операции аутентификации
-'''json
     {
       "type":"LOGIN_CUSTOMER”,
       "sequence_id":"a29e4fd0-581d-e06b-c837-4f5f4be7dd18”,
@@ -58,10 +55,8 @@ Application Server на выбор, предпочтение отдается wi
         "password":”123123"
       }
     }
-'''
 
 ### Ответ для успешной операции аутентификации
-'''json
     {
       "type":"CUSTOMER_API_TOKEN”,
       "sequence_id":"cbf187c9-8679-0359-eb3d-c3211ee51a15”,
@@ -70,10 +65,8 @@ Application Server на выбор, предпочтение отдается wi
         "api_token_expiration_date":"2015-07-15T11:14:30Z”
       }
     }
-'''
 
 ### Запрос для не успешной операции аутентификации
-'''json
     {
       "type":"LOGIN_CUSTOMER",
       "sequence_id":"715c13b3-881a-9c97-b853-10be585a9747”,
@@ -82,10 +75,8 @@ Application Server на выбор, предпочтение отдается wi
         "password":”newPassword"
       }
     }
-'''
 
 ### Ответ для не успешной операции аутентификации
-'''json
     {
       "type":"CUSTOMER_ERROR”,
       "sequence_id":"715c13b3-881a-9c97-b853-10be585a9747”,
@@ -94,4 +85,3 @@ Application Server на выбор, предпочтение отдается wi
         "error_code":"customer.notFound”
       }
     }
-'''

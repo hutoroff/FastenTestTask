@@ -1,15 +1,20 @@
 package ru.hutoroff.fasten.testtask.service.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 
 /**
  * Created by hutoroff on 06.02.17.
  */
+@JsonPropertyOrder({"type", "sequence_id"})
 public abstract class Message implements Serializable {
 
     static final long serialVersionUID = 1L;
 
     private MessageType type;
+    @JsonProperty("sequence_id")
     private String sequenceId;
 
     public MessageType getType() {

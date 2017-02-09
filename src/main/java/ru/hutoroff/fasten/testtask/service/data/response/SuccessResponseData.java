@@ -1,5 +1,9 @@
 package ru.hutoroff.fasten.testtask.service.data.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -7,8 +11,17 @@ import java.util.Date;
  */
 public class SuccessResponseData {
 
+    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+    public SuccessResponseData(String apiToken, Date apiTokenExpirationDate) {
+        this.apiToken = apiToken;
+        this.apiTokenExpirationDate = df.format(apiTokenExpirationDate);
+    }
+
+    @JsonProperty("api_token")
     private String apiToken;
-    private Date apiTokenExpirationDate;
+    @JsonProperty("api_token_expiration_date")
+    private String apiTokenExpirationDate;
 
     public String getApiToken() {
         return apiToken;
@@ -18,11 +31,11 @@ public class SuccessResponseData {
         this.apiToken = apiToken;
     }
 
-    public Date getApiTokenExpirationDate() {
+    public String getApiTokenExpirationDate() {
         return apiTokenExpirationDate;
     }
 
-    public void setApiTokenExpirationDate(Date apiTokenExpirationDate) {
+    public void setApiTokenExpirationDate(String apiTokenExpirationDate) {
         this.apiTokenExpirationDate = apiTokenExpirationDate;
     }
 }

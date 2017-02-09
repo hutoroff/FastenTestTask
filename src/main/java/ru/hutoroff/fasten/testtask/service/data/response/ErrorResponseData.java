@@ -1,12 +1,21 @@
 package ru.hutoroff.fasten.testtask.service.data.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by hutoroff on 06.02.17.
  */
 public class ErrorResponseData implements ResponseData {
 
+    @JsonProperty("error_description")
     private String errorDescription;
-    private String error_code;
+    @JsonProperty("error_code")
+    private String errorCode;
+
+    public ErrorResponseData(String errorDescription, String errorCode) {
+        this.errorDescription = errorDescription;
+        this.errorCode = errorCode;
+    }
 
     public String getErrorDescription() {
         return errorDescription;
@@ -16,11 +25,11 @@ public class ErrorResponseData implements ResponseData {
         this.errorDescription = errorDescription;
     }
 
-    public String getError_code() {
-        return error_code;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setError_code(String error_code) {
-        this.error_code = error_code;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 }

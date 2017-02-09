@@ -3,15 +3,20 @@ package ru.hutoroff.fasten.testtask.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
 import ru.hutoroff.fasten.testtask.jpa.dao.entity.UserDao;
+import ru.hutoroff.fasten.testtask.service.data.request.RequestMessage;
+import ru.hutoroff.fasten.testtask.service.data.response.ResponseMessage;
+import ru.hutoroff.fasten.testtask.service.data.response.SuccessResponseMessage;
+
+import java.util.Date;
 
 /**
  * Created by hutoroff on 06.02.17.
  */
-@RestController
-@RequestMapping("/")
+@Controller
 public class AuthController {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
@@ -19,8 +24,10 @@ public class AuthController {
     @Autowired
     UserDao userDao;
 
-    /*@RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> doAuth(@RequestBody RequestMessage, HttpServletRequest) {
-
-    }*/
+    @MessageMapping("/auth")
+    @SendTo("/topic/auth/result")
+    public ResponseMessage authUser(RequestMessage message) {
+        LOG.info("AuthUserCalled!");
+        return new SuccessResponseMessage(message.getSequenceId(), "OK", new Date());
+    }
 }

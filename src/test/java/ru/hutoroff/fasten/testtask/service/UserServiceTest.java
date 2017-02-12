@@ -29,7 +29,6 @@ public class UserServiceTest {
 
         Integer id = userService.saveUser(user);
         assertNotNull(id);
-        assertTrue(id > 0);
     }
 
     @Test

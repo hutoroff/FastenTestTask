@@ -22,8 +22,6 @@ import java.util.HashMap;
 @Service
 public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.service.security.TokenProviderService {
 
-    private static final String TOKEN_KEY = "fasten";
-
     @Autowired
     private UserDao userDao;
 

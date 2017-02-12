@@ -22,7 +22,7 @@ public class UserEntity {
     private String password;
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
-    @OneToMany(mappedBy = "user"/*, fetch = FetchType.EAGER*/)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<TokenEntity> tokens;
 
     public Integer getId() {

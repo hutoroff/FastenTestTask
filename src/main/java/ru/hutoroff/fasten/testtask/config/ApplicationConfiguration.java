@@ -21,7 +21,8 @@ public class ApplicationConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("database/sql/create_base.sql").build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("database/sql/create_base.sql")
+                .addScript("database/sql/add_users.sql").build();
     }
 
     @Bean

@@ -1,11 +1,14 @@
 package ru.hutoroff.fasten.testtask.jpa.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by hutoroff on 16.07.16.
  */
+@Transactional
 public interface GenericDao<T, Id extends Serializable> {
 
     Id save(T entity);

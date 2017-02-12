@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.hutoroff.fasten.testtask.jpa.dao.entity.UserDao;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
+import ru.hutoroff.fasten.testtask.service.security.ConstSecurity;
 import ru.hutoroff.fasten.testtask.service.security.exception.AuthenticationException;
 
 import java.time.LocalDateTime;
@@ -32,7 +33,9 @@ public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.serv
             return null;
 
         UserEntity userEntity = userDao.findUserByEmail(email);
-        if(!password.equals(userEntity.getPassword()))
+        if(userEntity == null)
+            throw new AuthenticationException("User with email " + email + " not found");
+        if(!userEntity.getPassword().equals(password))
             throw new AuthenticationException("User password does not match to received password");
 
         TokenEntity tokenEntity = new TokenEntity();
@@ -43,7 +46,7 @@ public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.serv
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setExpiration(tokenEntity.getExpirationDate());
         jwtBuilder.setClaims(prepareTokenData(tokenEntity));
-        return jwtBuilder.signWith(SignatureAlgorithm.HS256, TOKEN_KEY).compact();
+        return jwtBuilder.signWith(SignatureAlgorithm.HS256, ConstSecurity.TOKEN_KEY).compact();
     }
 
     private Date calculateExpirationDate(Date creationDate) {
@@ -56,11 +59,11 @@ public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.serv
 
     private HashMap<String, Object> prepareTokenData(TokenEntity tokenEntity) {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("userId", tokenEntity.getUser().getId());
-        result.put("login", tokenEntity.getUser().getLogin());
-        result.put("email", tokenEntity.getUser().getEmail());
-        result.put("token_creation_date", tokenEntity.getCreationDate());
-        result.put("token_expiration_date", tokenEntity.getExpirationDate());
+        result.put(ConstSecurity.TOKEN_BODY_USER_ID, tokenEntity.getUser().getId());
+        result.put(ConstSecurity.TOKEN_BODY_USER_LOGIN, tokenEntity.getUser().getLogin());
+        result.put(ConstSecurity.TOKEN_BODY_EMAIL, tokenEntity.getUser().getEmail());
+        result.put(ConstSecurity.TOKEN_BODY_CREATION_DATE, tokenEntity.getCreationDate());
+        result.put(ConstSecurity.TOKEN_BODY_EXPIRATION_DATE, tokenEntity.getExpirationDate());
 
         return result;
     }

@@ -27,7 +27,7 @@ public class TokenEntity {
     private Date creationDate;
     @Column(name = "IS_REVOKED", nullable = false)
     private Integer isRevoked;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
 

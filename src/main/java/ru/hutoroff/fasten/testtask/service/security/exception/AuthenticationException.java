@@ -1,4 +1,4 @@
-package ru.hutoroff.fasten.testtask.security.exception;
+package ru.hutoroff.fasten.testtask.service.security.exception;
 
 /**
  * Created by hutoroff on 10.02.17.

@@ -1,4 +1,4 @@
-package ru.hutoroff.fasten.testtask.service;
+package ru.hutoroff.fasten.testtask.service.security.impl;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -9,8 +9,7 @@ import ru.hutoroff.fasten.testtask.jpa.dao.entity.TokenDao;
 import ru.hutoroff.fasten.testtask.jpa.dao.entity.UserDao;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
-import ru.hutoroff.fasten.testtask.security.TokenProvider;
-import ru.hutoroff.fasten.testtask.security.exception.AuthenticationException;
+import ru.hutoroff.fasten.testtask.service.security.exception.AuthenticationException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,7 +20,7 @@ import java.util.HashMap;
  * Created by hutoroff on 10.02.17.
  */
 @Service
-public class TokenProviderService implements TokenProvider {
+public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.service.security.TokenProviderService {
 
     private static final String TOKEN_KEY = "fasten";
 

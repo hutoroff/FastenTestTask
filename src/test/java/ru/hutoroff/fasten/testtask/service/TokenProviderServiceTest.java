@@ -11,6 +11,7 @@ import ru.hutoroff.fasten.testtask.jpa.dao.entity.TokenDao;
 import ru.hutoroff.fasten.testtask.jpa.dao.entity.UserDao;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
+import ru.hutoroff.fasten.testtask.service.security.impl.TokenProviderServiceJWT;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 public class TokenProviderServiceTest {
 
     @Autowired
-    TokenProviderService tokenProviderService;
+    TokenProviderServiceJWT tokenProviderService;
 
     @Autowired
     UserDao userDao;

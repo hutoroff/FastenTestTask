@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
  */
 @Service("tokenProviderService")
 public interface TokenProviderService {
-    String getToken(String login, String password) throws Exception;
+    String getToken(String email, String password) throws Exception;
 }

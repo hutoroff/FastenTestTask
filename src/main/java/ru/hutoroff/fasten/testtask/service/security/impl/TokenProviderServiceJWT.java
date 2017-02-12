@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hutoroff.fasten.testtask.jpa.dao.entity.TokenDao;
 import ru.hutoroff.fasten.testtask.jpa.dao.entity.UserDao;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
@@ -26,8 +25,6 @@ public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.serv
 
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private TokenDao tokenDao;
 
     @Override
     public String getToken(String email, String password) throws AuthenticationException {
@@ -46,9 +43,7 @@ public class TokenProviderServiceJWT implements ru.hutoroff.fasten.testtask.serv
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setExpiration(tokenEntity.getExpirationDate());
         jwtBuilder.setClaims(prepareTokenData(tokenEntity));
-        tokenEntity.setToken(jwtBuilder.signWith(SignatureAlgorithm.HS256, TOKEN_KEY).compact());
-
-        return tokenDao.save(tokenEntity);
+        return jwtBuilder.signWith(SignatureAlgorithm.HS256, TOKEN_KEY).compact();
     }
 
     private Date calculateExpirationDate(Date creationDate) {

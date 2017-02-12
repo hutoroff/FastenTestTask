@@ -35,17 +35,25 @@ function disconnect() {
 function sendName() {
     stompClient.send("/app/auth", {}, JSON.stringify({
         'type':'LOGIN_CUSTOMER',
-        'sequence_id':'a29e4fd0-581d-e06b-c837-4f5f4be7dd18',
+        'sequence_id': getGuid(),
         'data':{
-            'email':'fpi@bk.ru',
-            'password':'123123'
+            'email':$("#email").val(),
+            'password':$("#password").val()
         }
     }
 ));
 }
 
 function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    $("#responses").append("<tr><td>" + message + "</td></tr>");
+}
+
+function getGuid() {
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+function S4() {
+    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }
 
 $(function () {

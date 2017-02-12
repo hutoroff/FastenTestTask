@@ -15,7 +15,7 @@
     Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <form class="form-inline">
                 <div class="form-group">
                     <label for="connect">WebSocket connection:</label>
@@ -25,14 +25,22 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form class="form-inline login-input">
                 <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control">
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control">
+                </div>
             </form>
+            <div class="col-md-3 block-controls">
+                <button id="send" class="btn btn-default" type="submit">Login</button>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -40,10 +48,10 @@
             <table id="conversation" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Greetings</th>
+                    <th>Responses</th>
                 </tr>
                 </thead>
-                <tbody id="greetings">
+                <tbody id="responses">
                 </tbody>
             </table>
         </div>

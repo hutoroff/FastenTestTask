@@ -12,3 +12,18 @@ body {
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
+.login-input .form-group label {
+    display: inline-block;
+    width: 70px;
+    text-align: right;
+}
+
+.block-controls {
+    float: right;
+}
+
+.form-inline {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

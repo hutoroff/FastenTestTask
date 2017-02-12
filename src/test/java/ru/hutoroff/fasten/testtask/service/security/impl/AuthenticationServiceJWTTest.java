@@ -11,6 +11,7 @@ import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
 import ru.hutoroff.fasten.testtask.service.UserService;
 import ru.hutoroff.fasten.testtask.service.security.AuthResult;
+import ru.hutoroff.fasten.testtask.service.security.AuthenticationResponse;
 import ru.hutoroff.fasten.testtask.service.security.AuthenticationService;
 
 import static org.junit.Assert.assertNotNull;
@@ -31,9 +32,11 @@ public class AuthenticationServiceJWTTest {
 
     @Test
     public void authenticateTest() throws Exception {
-        AuthResult authResult = authService.authenticate("fpi@bk.ru", "123123");
-        assertNotNull(authResult);
-        assertTrue(authResult.equals(AuthResult.SUCCESS));
+        AuthenticationResponse response = authService.authenticate("fpi@bk.ru", "123123");
+        assertNotNull(response);
+        assertNotNull(response.getResult());
+        assertTrue(response.getResult().equals(AuthResult.SUCCESS));
+        assertNotNull(response.getToken());
 
         UserEntity userEntity = userService.getUserByEmail("fpi@bk.ru");
         assertNotNull(userEntity.getTokens());
@@ -42,17 +45,19 @@ public class AuthenticationServiceJWTTest {
 
     @Test
     public void authenticateTest_revoke() throws Exception {
-        AuthResult authResult = authService.authenticate("fpi@bk.ru", "123123");
-        assertNotNull(authResult);
-        assertTrue(authResult.equals(AuthResult.SUCCESS));
+        AuthenticationResponse response = authService.authenticate("fpi@bk.ru", "123123");
+        assertNotNull(response);
+        assertNotNull(response.getResult());
+        assertTrue(response.getResult().equals(AuthResult.SUCCESS));
 
         UserEntity userEntity = userService.getUserByEmail("fpi@bk.ru");
         assertNotNull(userEntity.getTokens());
         assertTrue(userEntity.getTokens().size() == 1);
 
-        authResult = authService.authenticate("fpi@bk.ru", "123123");
-        assertNotNull(authResult);
-        assertTrue(authResult.equals(AuthResult.SUCCESS));
+        response = authService.authenticate("fpi@bk.ru", "123123");
+        assertNotNull(response);
+        assertNotNull(response.getResult());
+        assertTrue(response.getResult().equals(AuthResult.SUCCESS));
 
         userEntity = userService.getUserByEmail("fpi@bk.ru");
         assertNotNull(userEntity.getTokens());

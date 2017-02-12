@@ -12,10 +12,7 @@ import ru.hutoroff.fasten.testtask.jpa.dao.entity.TokenDao;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.jpa.model.UserEntity;
 import ru.hutoroff.fasten.testtask.service.UserService;
-import ru.hutoroff.fasten.testtask.service.security.AuthResult;
-import ru.hutoroff.fasten.testtask.service.security.AuthenticationService;
-import ru.hutoroff.fasten.testtask.service.security.ConstSecurity;
-import ru.hutoroff.fasten.testtask.service.security.TokenProviderService;
+import ru.hutoroff.fasten.testtask.service.security.*;
 import ru.hutoroff.fasten.testtask.service.security.exception.AuthenticationException;
 
 import java.util.Date;
@@ -37,10 +34,10 @@ public class AuthenticationServiceJWT implements AuthenticationService {
     TokenProviderService tokenProviderService;
 
     @Override
-    public AuthResult authenticate(String email, String password) {
+    public AuthenticationResponse authenticate(String email, String password) {
         if(email == null || password == null) {
             LOG.warn("Incorrect data received to authentication service: email {}, password {}", email, password);
-            return AuthResult.ERROR_USER_NOT_FOUND;
+            return new AuthenticationResponse(AuthResult.ERROR_USER_NOT_FOUND, null);
         }
 
         String token;
@@ -48,7 +45,7 @@ public class AuthenticationServiceJWT implements AuthenticationService {
             token = tokenProviderService.getToken(email, password);
         } catch (AuthenticationException e) {
             LOG.error("Authentication error on getting token for email {}. Caused by: ", e);
-            return AuthResult.ERROR_USER_NOT_FOUND;
+            return new AuthenticationResponse(AuthResult.ERROR_USER_NOT_FOUND, null);
         }
 
         UserEntity user = userService.getUserByEmail(email);
@@ -62,7 +59,7 @@ public class AuthenticationServiceJWT implements AuthenticationService {
         tokenDao.save(newToken);
         userService.saveUser(user);
 
-        return AuthResult.SUCCESS;
+        return new AuthenticationResponse(AuthResult.SUCCESS, newToken);
     }
 
     private TokenEntity prepareTokenEntity(String token) {

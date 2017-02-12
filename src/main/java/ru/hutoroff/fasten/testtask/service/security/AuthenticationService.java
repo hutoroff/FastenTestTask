@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
  */
 @Service("authService")
 public interface AuthenticationService {
-    AuthResult authenticate(String email, String password);
+    AuthenticationResponse authenticate(String email, String password);
 }

@@ -24,6 +24,13 @@ public class UserService {
         return userDao.save(user);
     }
 
+    public UserEntity deleteUser(String email) {
+        UserEntity user = userDao.findUserByEmail(email);
+        userDao.makeTransient(user);
+        userDao.delete(user);
+        return user;
+    }
+
     public UserEntity getUserByEmail(String email) {
         if(email == null)
             return null;

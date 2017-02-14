@@ -9,7 +9,7 @@
   <name>testTask</name>
 
   <properties>
-    <project.version>0.0.1.SNAPSHOT</project.version>
+    <project.version>0.0.1.RELEASE</project.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <!--Dependencies version-->

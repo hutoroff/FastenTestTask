@@ -13,12 +13,17 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/websocket');
+    let sessionId = Math.random().toString(16).substring(7);
+    let socket = new SockJS('/websocket', [], {
+        sessionId: () => {
+            return sessionId;
+        }
+    });
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/auth/result', function (message) {
+        stompClient.subscribe('/user/' + sessionId + '/topic/auth/result', function (message) {
             showResponse(message.body);
         });
     });

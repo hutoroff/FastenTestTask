@@ -3,8 +3,12 @@ package ru.hutoroff.fasten.testtask.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import ru.hutoroff.fasten.testtask.jpa.model.TokenEntity;
 import ru.hutoroff.fasten.testtask.service.data.request.RequestMessage;
@@ -25,15 +29,30 @@ public class AuthController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    AuthenticationService authService;
+    private AuthenticationService authService;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @MessageMapping("/auth")
-    @SendTo("/topic/auth/result")
-    public ResponseMessage authUser(RequestMessage message) {
-        if(message.getData() == null)
-            LOG.error("No data was received in message with seq_id: {}", message.getSequenceId());
-        AuthenticationResponse authenticationResponse = authService.authenticate(message.getData().getEmail(), message.getData().getPassword());
-        return prepareResponse(authenticationResponse, message);
+    //@SendTo("/topic/auth/result")
+    public void authUser(SimpMessageHeaderAccessor headerAccessor, @Payload RequestMessage authMessage) {
+        if(authMessage.getData() == null)
+            LOG.error("No data was received in message with seq_id: {}", authMessage.getSequenceId());
+
+        String sessionId = headerAccessor.getMessageHeaders().get(SimpMessageHeaderAccessor.SESSION_ID_HEADER).toString();
+
+        AuthenticationResponse authenticationResponse = authService.authenticate(authMessage.getData().getEmail(), authMessage.getData().getPassword());
+        ResponseMessage responseMessage = prepareResponse(authenticationResponse, authMessage);
+
+        template.convertAndSendToUser(sessionId,"/topic/auth/result", responseMessage, this.createHeaders(sessionId));
+    }
+
+    private MessageHeaders createHeaders(String sessionId) {
+        SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+        headerAccessor.setSessionId(sessionId);
+        headerAccessor.setLeaveMutable(true);
+        return headerAccessor.getMessageHeaders();
     }
 
     private ResponseMessage prepareResponse(AuthenticationResponse authResult, RequestMessage requestMessage) {

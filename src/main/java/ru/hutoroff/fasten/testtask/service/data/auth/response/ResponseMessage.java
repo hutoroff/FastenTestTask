@@ -1,6 +1,6 @@
-package ru.hutoroff.fasten.testtask.service.data.response;
+package ru.hutoroff.fasten.testtask.service.data.auth.response;
 
-import ru.hutoroff.fasten.testtask.service.data.Message;
+import ru.hutoroff.fasten.testtask.service.data.auth.Message;
 
 /**
  * Created by hutoroff on 06.02.17.

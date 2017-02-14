@@ -1,4 +1,4 @@
-package ru.hutoroff.fasten.testtask.service.data.request;
+package ru.hutoroff.fasten.testtask.service.data.auth.request;
 
 import java.io.Serializable;
 

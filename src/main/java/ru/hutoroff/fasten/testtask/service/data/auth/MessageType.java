@@ -1,4 +1,4 @@
-package ru.hutoroff.fasten.testtask.service.data;
+package ru.hutoroff.fasten.testtask.service.data.auth;
 
 /**
  * Created by hutoroff on 06.02.17.

@@ -1,4 +1,4 @@
-package ru.hutoroff.fasten.testtask.service.data;
+package ru.hutoroff.fasten.testtask.service.data.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

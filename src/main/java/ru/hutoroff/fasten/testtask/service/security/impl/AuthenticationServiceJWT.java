@@ -44,7 +44,7 @@ public class AuthenticationServiceJWT implements AuthenticationService {
         try {
             token = tokenProviderService.getToken(email, password);
         } catch (AuthenticationException e) {
-            LOG.error("Authentication error on getting token for email {}. Caused by: ", e);
+            LOG.error("Authentication error on getting token for email {}. Caused by: ", email, e);
             return new AuthenticationResponse(AuthResult.ERROR_USER_NOT_FOUND, null);
         }
 

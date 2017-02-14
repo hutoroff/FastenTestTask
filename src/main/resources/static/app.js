@@ -1,13 +1,15 @@
-var stompClient = null;
+let stompClient = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
-        $("#conversation").show();
+        $("#imputMessages").show();
+        $("#send").prop('disabled', false);
     }
     else {
-        $("#conversation").hide();
+        $("#imputMessages").hide();
+        $("#send").prop('disabled', true);
     }
     $("#responses").html("");
 }
